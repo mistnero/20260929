@@ -2,10 +2,48 @@
 //
 
 #include <iostream>
+#include <vector>
+#include <memory>
+#include <stack>
+
+#include "ObjectPool.h"
+class Enemy
+{
+public:
+    void Attack()
+    {
+        std::cout << "Enemy attacks!" << std::endl;
+    }
+};
+class Player
+{
+public:
+    void Attack()
+    {
+        std::cout << "Player attacks!" << std::endl;
+    }
+    void Special()
+    {
+        std::cout << "Player's SpecialAttack!" << std::endl;
+    }
+};
+
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    ObjectPool<Enemy> pool(2);
+    ObjectPool<Player> ppool(1);
+
+    auto e1 = pool.Acquire();
+    e1->Attack();
+
+    auto p1 = ppool.Acquire();
+    p1->Attack();
+
+    auto e2 = pool.Acquire();
+    e2->Attack();
+
+    p1->Special();
 }
 
 // プログラムの実行: Ctrl + F5 または [デバッグ] > [デバッグなしで開始] メニュー
